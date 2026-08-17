@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Threadly - Product</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <p class="brand">Threadly</p>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+  </nav>
+</header>
+<main>
+  <div id="product-detail" class="product-detail"></div>
+</main>
+<script src="cart.js"></script>
+<script>
+const id = new URLSearchParams(location.search).get('id');
+let product;
+
+fetch(`/api/products/${id}`)
+  .then(res => res.json())
+  .then(p => {
+    product = p;
+    document.getElementById('product-detail').innerHTML = `
+      <img src="${p.image}" alt="${p.name}">
+      <div>
+        <h1>${p.name}</h1>
+        <p class="price">$${p.price.toFixed(2)}</p>
+        <p>${p.description}</p>
+        <button id="add-btn">Add to Cart</button>
+      </div>
+    `;
+    document.getElementById('add-btn').addEventListener('click', () => addToCart(product));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Threadly - Cart</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <p class="brand">Threadly</p>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+  </nav>
+</header>
+<main>
+  <h1>Your Cart</h1>
+  <div id="cart-items"></div>
+  <div id="cart-total" class="cart-total" style="display:none">
+    <span>Total</span>
+    <span id="cart-total-amount"></span>
+  </div>
+</main>
+<script src="cart.js"></script>
+<script>
+function render() {
+  const cart = getCart();
+  const container = document.getElementById('cart-items');
+  const totalEl = document.getElementById('cart-total');
+
+  if (cart.length === 0) {
+    container.innerHTML = '<p class="empty">Your cart is empty.</p>';
+    totalEl.style.display = 'none';
+    return;
+  }
+
+  container.innerHTML = cart.map(item => `
+    <div class="cart-row">
+      <img src="${item.image}" alt="${item.name}">
+      <div class="name">${item.name}<br>$${item.price.toFixed(2)}</div>
+      <input type="number" min="1" value="${item.qty}" data-id="${item.id}" class="qty-input">
+      <button class="secondary remove-btn" data-id="${item.id}">Remove</button>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.qty-input').forEach(input => {
+    input.addEventListener('change', e => {
+      setQty(Number(e.target.dataset.id), Number(e.target.value));
+      render();
+    });
+  });
+  document.querySelectorAll('.remove-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      removeFromCart(Number(e.target.dataset.id));
+      render();
+    });
+  });
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  totalEl.style.display = 'flex';
+  document.getElementById('cart-total-amount').textContent = `$${total.toFixed(2)}`;
+}
+
+render();
+</script>
+</body>
+</html>
