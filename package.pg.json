@@ -1,0 +1,16 @@
+{
+  "name": "clothing-shop",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "seed": "node db/seed.js",
+    "seed:pg": "node db/seed.pg.js",
+    "start": "node backend/server.js",
+    "start:pg": "node backend/server.pg.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "express": "^4.19.2",
+    "pg": "^8.13.0"
+  }
+}
