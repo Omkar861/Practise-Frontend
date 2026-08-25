@@ -4,6 +4,13 @@ const { Pool } = require('pg');
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const app = express();
 
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    console.log(`${new Date().toISOString()} ${req.method} ${req.originalUrl} ${res.statusCode}`);
+  });
+  next();
+});
+
 app.get('/api/products', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM products');
