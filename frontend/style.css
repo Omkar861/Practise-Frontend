@@ -6,10 +6,10 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: #111;
-  color: #fff;
+  background: #f5c518;
+  color: #111;
 }
-header a { color: #fff; text-decoration: none; margin-left: 1.5rem; font-weight: 500; }
+header a { color: #111; text-decoration: none; margin-left: 1.5rem; font-weight: 500; }
 header .brand { font-size: 1.25rem; font-weight: 700; margin: 0; }
 
 main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
