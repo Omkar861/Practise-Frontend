@@ -21,7 +21,8 @@ async function seed() {
     const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
     const name = `${adjective} ${item}`;
     const price = Math.round((Math.random() * 100 + 15) * 100) / 100;
-    const image = `https://placehold.co/500x600?text=Item+${i}`;
+    const keyword = item.toLowerCase().replace(/\s+/g, '-');
+    const image = `https://loremflickr.com/500/600/${keyword},fashion`;
     const description = `A ${adjective.toLowerCase()} ${item.toLowerCase()} made for everyday wear.`;
     await pool.query(
       'INSERT INTO products (name, price, image, description) VALUES ($1, $2, $3, $4)',
